@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <div style ={{ display: 'flex' }}>
         <Sidebar />
-        <main>
+        <main className="ml-74">
           <Routes>
             <Route path="/events" element={<Events />} />
             <Route path="/teams" element={<Teams />} />
