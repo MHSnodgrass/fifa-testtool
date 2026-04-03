@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { EventResponse, Stage } from "../types/api";
 import { STAGE_LABELS } from "../types/api";
 import { getAllEvents, getEventsByStage } from "../api/client";

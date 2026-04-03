@@ -4,14 +4,20 @@ import TopBar from './components/TopBar'
 import EditTournament from './pages/EditTournament'
 import Teams from './pages/Teams'
 import Events from './pages/Events'
+import { useState } from 'react'
 
 function App() {
+  const [isSideBarOpen, setSideBar] = useState(true);
+
   return (
     <BrowserRouter>
       <div style ={{ display: 'flex' }}>
         <TopBar />
-        <Sidebar />
-        <main className="ml-74 pt-16 w-full px-4">
+        <Sidebar
+          isOpen={isSideBarOpen}
+          toggleSideBar={() => setSideBar(!isSideBarOpen)}
+        />
+        <main className={`pt-16 w-full px-4 ${isSideBarOpen ? 'ml-74' : 'ml-22'} transition-all duration-300`}>
           <Routes>
             <Route path="/events" element={<Events />} />
             <Route path="/teams" element={<Teams />} />
