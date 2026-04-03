@@ -17,10 +17,20 @@ function Sidebar({ isOpen, toggleSideBar }: SideBarProps) {
         justify-center transition-colors z-50 hover:cursor-pointer ${!isOpen ? 'rotate-180': ''}`} onClick={toggleSideBar}>
           keyboard_double_arrow_left
       </button>
-      <div className="px-8 mb-8 mt-10">
-        <h2 className={`text-[#e5e2e1] font-black text-xl uppercase tracking-tighter whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen ? 'opacity-100 max-w-50': 'opacity-0 max-w-0' }`}>
-          Tournament Admin
-        </h2>
+      <div className="flex items-center gap-4 px-5 mb-12 mt-8">
+        <div className="w-10 h-10 shrink-0 rounded bg-primary-container/10 border border-primary/20 flex items-center justify-center">
+          <span className="material-symbols-outlined text-primary text-2xl">
+            account_tree
+          </span>
+        </div>
+        <div className={`flex flex-col transition-all duration-300 overflow-hidden whitespace-nowrap ${isOpen ? 'opacity-100 max-w-50' : 'opacity-0 max-w-0'}`}>
+          <span className="text-on-surface font-black text-lg uppercase tracking-tighter leading-none">
+            FIFA '26
+          </span>
+          <span className="text-secondary text-[0.625rem] font-bold uppercase tracking-[0.2em] mt-0.5">
+            Test Tool
+          </span>
+        </div>
       </div>
       <nav className="flex flex-col space-y-1">
         <NavLink to="/events" className={({ isActive }) => isActive ? activeClasses : inactiveClasses }>
