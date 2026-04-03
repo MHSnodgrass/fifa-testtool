@@ -49,6 +49,10 @@
   --color-on-tertiary-fixed-variant: #004a75;
   --color-outline-variant: #554336;
   --color-secondary-fixed-dim: #b9c7df;
+  --color-warning: #FFD580;
+  --color-on-warning: #452B00;
+  --color-warning-container: #624000;
+  --color-on-warning-container: #FFDDB3;
 
   /* ── Font families ── */
   --font-headline: "Space Grotesk", sans-serif;
