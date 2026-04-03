@@ -10,20 +10,24 @@ interface SideBarProps {
 }
 
 function Sidebar({ isOpen, toggleSideBar }: SideBarProps) {
+  const transitionClasses = `whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen ? 'opacity-100 max-w-50': 'opacity-0 max-w-0' }`;
+
   return (
     <aside className={`fixed left-0 top-0 h-full bg-surface-container-lowest flex flex-col pt-16 z-40 ${isOpen ? 'w-72' : 'w-20'} transition-all duration-300`}>
+      {/* All of this to make the button look nice - used to open/close sidebar and send prop back up. rotate-180 is a nice trick to avoid using ...arrow_right with a conditional */}
       <button className={`material-symbols-outlined absolute right-0 top-20 translate-x-1/2 w-8 h-8 rounded-full bg-surface-container-high 
         border border-outline-variant/30 text-secondary hover:text-primary hover:bg-surface-container-highest flex items-center 
         justify-center transition-colors z-50 hover:cursor-pointer ${!isOpen ? 'rotate-180': ''}`} onClick={toggleSideBar}>
           keyboard_double_arrow_left
       </button>
+      {/* Section that holds info at the top of the side bar (icon, etc) */}
       <div className="flex items-center gap-4 px-5 mb-12 mt-8">
         <div className="w-10 h-10 shrink-0 rounded bg-primary-container/10 border border-primary/20 flex items-center justify-center">
           <span className="material-symbols-outlined text-primary text-2xl">
             account_tree
           </span>
         </div>
-        <div className={`flex flex-col transition-all duration-300 overflow-hidden whitespace-nowrap ${isOpen ? 'opacity-100 max-w-50' : 'opacity-0 max-w-0'}`}>
+        <div className={`flex flex-col ${transitionClasses}`}>
           <span className="text-on-surface font-black text-lg uppercase tracking-tighter leading-none">
             FIFA '26
           </span>
@@ -32,12 +36,13 @@ function Sidebar({ isOpen, toggleSideBar }: SideBarProps) {
           </span>
         </div>
       </div>
+      {/* Menu options (icons, routes, etc) */}
       <nav className="flex flex-col space-y-1">
         <NavLink to="/events" className={({ isActive }) => isActive ? activeClasses : inactiveClasses }>
           <span className="material-symbols-outlined text-xl">
             event
           </span>
-          <span className={`whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen ? 'opacity-100 max-w-50': 'opacity-0 max-w-0' }`}>
+          <span className={transitionClasses}>
             Events
           </span>
         </NavLink>
@@ -45,7 +50,7 @@ function Sidebar({ isOpen, toggleSideBar }: SideBarProps) {
           <span className="material-symbols-outlined text-xl">
             groups
           </span>
-          <span className={`whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen ? 'opacity-100 max-w-50': 'opacity-0 max-w-0' }`}>
+          <span className={transitionClasses}>
             Teams
           </span>
         </NavLink>
@@ -53,7 +58,7 @@ function Sidebar({ isOpen, toggleSideBar }: SideBarProps) {
           <span className="material-symbols-outlined text-xl">
             edit
           </span>
-          <span className={`whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen ? 'opacity-100 max-w-50': 'opacity-0 max-w-0' }`}>
+          <span className={transitionClasses}>
             Edit Tournament
           </span>
         </NavLink>
