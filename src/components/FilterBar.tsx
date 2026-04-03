@@ -53,7 +53,7 @@ function FilterBar({ selectedStage, onStageChange, onSearch }: FilterBarProps) {
                 </div>
             </div>
             <button
-                className="bg-primary-container text-on-primary-container px-10 py-3 font-bold text-sm uppercase tracking-widest hover:bg-primary-fixed transition-colors flex items-center gap-2 h-11.5"
+                className="bg-primary-container text-on-primary-container px-10 py-3 font-bold text-sm uppercase tracking-widest hover:bg-primary-fixed transition-colors flex items-center gap-2 h-11.5 hover:cursor-pointer"
                 onClick={onSearch}
             >
                 <span className="material-symbols-outlined text-lg">search</span>Search

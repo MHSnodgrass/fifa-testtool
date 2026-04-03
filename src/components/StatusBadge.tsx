@@ -1,6 +1,7 @@
 import type { MatchStatus } from "../types/api"
 
 function StatusBadge({ status }: { status: MatchStatus }) {
+    const baseStyle = "text-[0.6875rem] uppercase tracking-[0.1em] "
     const statusStyles: Record<MatchStatus, string> = {
         'IN_PROGRESS': 'text-error',
         'FINISHED': 'text-secondary',
@@ -11,7 +12,7 @@ function StatusBadge({ status }: { status: MatchStatus }) {
     }
 
     return(
-        <p className={statusStyles[status]}>{status}</p>
+        <p className={baseStyle + statusStyles[status]}>{status == "IN_PROGRESS" ? "LIVE" : status}</p>
     )
 }
 

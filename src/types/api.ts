@@ -33,7 +33,7 @@ export interface EventResponse {
     awayTeam: TeamResponse | null;
     homeTeamPlaceholder: string | null;
     awayTeamPlaceholder: string | null;
-    matchData: string;
+    matchDate: string;
     kickoffTime: string | null;
     kickoffUtc: string | null;
     arenaName: string;
