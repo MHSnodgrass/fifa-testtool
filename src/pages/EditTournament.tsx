@@ -1,5 +1,5 @@
 function EditTournament() {
-  return <h1>Edit Tournament</h1>
+  return <h1>Edit Tournament</h1>;
 }
 
-export default EditTournament
+export default EditTournament;
