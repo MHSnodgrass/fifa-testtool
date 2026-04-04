@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Teams from './Teams';
 import { getAllTeams } from '../api/client';
@@ -58,5 +59,57 @@ describe('Teams Page Integration', () => {
       expect(screen.getByText('System Error')).toBeInTheDocument();
       expect(screen.getByText('Network failure')).toBeInTheDocument();
     });
+  });
+
+  it('opens and closes the modal when a team is clicked', async () => {
+    // Setup our mock API to return a single team with stats
+    const mockData: Partial<TeamResponse>[] = [
+      {
+        id: 1,
+        countryName: 'Canada',
+        countryCode: 'CAN',
+        groupLetter: 'A',
+        fifaRanking: 10,
+        managerName: 'John Doe',
+        flagUrl: '/assets/flags/can.svg',
+        stats: {
+          matchesPlayed: 3,
+          wins: 1,
+          draws: 1,
+          losses: 1,
+          goalsFor: 2,
+          goalsAgainst: 2,
+          goalDifference: 0,
+          groupPoints: 4,
+          yellowCards: 2,
+          redCards: 0,
+          eliminated: true
+        }
+      }
+    ];
+    vi.mocked(getAllTeams).mockResolvedValueOnce(mockData as TeamResponse[]);
+
+    render(<Teams />);
+
+    // Wait for the team to be displayed
+    await waitFor(() => {
+      expect(screen.getByText('Canada')).toBeInTheDocument();
+    });
+
+    // Act: Click the team
+    const teamElement = screen.getByText('Canada');
+    await userEvent.click(teamElement);
+
+    // Assert: Check if modal content is displayed
+    expect(screen.getByText('Team Details')).toBeInTheDocument();
+    expect(screen.getByText('Tournament Statistics')).toBeInTheDocument();
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+
+    // Act: Click close button
+    const closeButton = screen.getByRole('button', { name: /close modal/i });
+    await userEvent.click(closeButton);
+
+    // Assert: Check if modal is closed
+    expect(screen.queryByText('Team Details')).not.toBeInTheDocument();
   });
 });

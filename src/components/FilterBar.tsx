@@ -53,7 +53,7 @@ function FilterBar({ selectedStage, onStageChange, onSearch }: FilterBarProps) {
         <div className="relative">
           <select
             className="bg-surface-container-high w-full border-none text-on-surface py-3 px-4 text-sm focus:ring-1 focus:ring-primary appearance-none"
-            value="ALL"
+            defaultValue="ALL"
           >
             <option value="ALL">All Dates</option>
           </select>

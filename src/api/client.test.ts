@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { getAllEvents, getEventsByStage, getAllTeams, getTeamsByGroup } from './client';
+import { getAllEvents, getEventsByStage, getEventsByTeam, getAllTeams, getTeamsByGroup } from './client';
 
 // 1. Mock the global fetch function provided by the browser/jsdom
 const mockFetch = vi.fn();
@@ -44,6 +44,14 @@ describe('API Client', () => {
     await getEventsByStage('GROUP');
 
     expect(mockFetch).toHaveBeenCalledWith('api/events/stage/GROUP');
+  });
+
+  it('getEventsByTeam fetches the correct URL with the provided teamId', async () => {
+    mockFetch.mockResolvedValueOnce({ ok: true, json: async () => [] });
+
+    await getEventsByTeam(1);
+
+    expect(mockFetch).toHaveBeenCalledWith('/api/events/team/1');
   });
 
   it('getAllTeams fetches the correct URL', async () => {
