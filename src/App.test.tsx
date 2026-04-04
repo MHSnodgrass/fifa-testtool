@@ -7,7 +7,8 @@ import App from './App';
 // might try to use them, and we want to keep our tests isolated from network calls.
 vi.mock('./api/client', () => ({
   getAllEvents: vi.fn(),
-  getEventsByStage: vi.fn()
+  getEventsByStage: vi.fn(),
+  getAllTeams: vi.fn().mockResolvedValue([])
 }));
 
 describe('App Root & Routing', () => {
