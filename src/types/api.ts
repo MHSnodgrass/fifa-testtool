@@ -24,6 +24,17 @@ export interface TeamResponse {
   stats: TeamStatsResponse | null;
 }
 
+export interface PlayerResponse {
+  name: string | null;
+  number: number | null;
+  position: string | null;
+  isCaptain: boolean | null;
+}
+
+export interface TeamDetailResponse extends TeamResponse {
+  squad: PlayerResponse[];
+}
+
 export interface EventResponse {
   id: number;
   matchNumber: number;
