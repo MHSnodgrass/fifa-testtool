@@ -2,12 +2,13 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Teams from './Teams';
-import { getAllTeams } from '../api/client';
-import type { TeamResponse } from '../types/api';
+import { getAllTeams, getTeamDetails } from '../api/client';
+import type { TeamResponse, TeamDetailResponse } from '../types/api';
 
 // Mock the API client
 vi.mock('../api/client', () => ({
-  getAllTeams: vi.fn()
+  getAllTeams: vi.fn(),
+  getTeamDetails: vi.fn()
 }));
 
 describe('Teams Page Integration', () => {
@@ -87,7 +88,16 @@ describe('Teams Page Integration', () => {
         }
       }
     ];
+
+    const mockDetail: Partial<TeamDetailResponse> = {
+      ...mockData[0] as TeamDetailResponse,
+      squad: [
+        { name: 'Alphonso Davies', number: 19, position: 'Defender', isCaptain: true }
+      ]
+    };
+
     vi.mocked(getAllTeams).mockResolvedValueOnce(mockData as TeamResponse[]);
+    vi.mocked(getTeamDetails).mockResolvedValueOnce(mockDetail as TeamDetailResponse);
 
     render(<Teams />);
 
@@ -104,6 +114,12 @@ describe('Teams Page Integration', () => {
     expect(screen.getByText('Team Details')).toBeInTheDocument();
     expect(screen.getByText('Tournament Statistics')).toBeInTheDocument();
     expect(screen.getByText('John Doe')).toBeInTheDocument();
+
+    // Check for roster information
+    await waitFor(() => {
+      expect(screen.getByText('Alphonso Davies')).toBeInTheDocument();
+      expect(screen.getByText('Defender')).toBeInTheDocument();
+    });
 
     // Act: Click close button
     const closeButton = screen.getByRole('button', { name: /close modal/i });

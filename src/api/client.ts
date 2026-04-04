@@ -1,4 +1,4 @@
-import { type TeamResponse, type EventResponse, type Group, type Stage } from '../types/api';
+import { type TeamResponse, type TeamDetailResponse, type EventResponse, type Group, type Stage } from '../types/api';
 
 // Generic Fetch
 async function apiFetch<T>(path: string): Promise<T> {
@@ -21,4 +21,4 @@ export const getEventsByTeam = (teamId: number) =>
 export const getAllTeams = () => apiFetch<TeamResponse[]>(`/api/teams`);
 export const getTeamsByGroup = (group: Group) =>
   apiFetch<TeamResponse[]>(`/api/teams/group/${group}`);
-export const getTeamDetails = (teamId: number) => apiFetch<TeamResponse>(`/api/teams/${teamId}`);
+export const getTeamDetails = (teamId: number) => apiFetch<TeamDetailResponse>(`/api/teams/${teamId}`);
