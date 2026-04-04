@@ -1,9 +1,9 @@
-import { useState } from "react";
-import type { EventResponse, Stage } from "../types/api";
-import { STAGE_LABELS } from "../types/api";
-import { getAllEvents, getEventsByStage } from "../api/client";
-import FilterBar from "../components/FilterBar";
-import MatchCard from "../components/MatchCard";
+import { useState } from 'react';
+import type { EventResponse, Stage } from '../types/api';
+import { STAGE_LABELS } from '../types/api';
+import { getAllEvents, getEventsByStage } from '../api/client';
+import FilterBar from '../components/FilterBar';
+import MatchCard from '../components/MatchCard';
 
 function Events() {
   // Page States
@@ -27,14 +27,14 @@ function Events() {
 
     // Execute
     fetchPromise
-      .then(result => {
+      .then((result) => {
         setData(result);
         setAppliedStage(selectedStage);
       })
-      .catch(err => setError(err.message))
+      .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }
-  
+
   return (
     <>
       <FilterBar
@@ -43,9 +43,13 @@ function Events() {
         onSearch={handleSearch}
       />
       <h1 className="text-3xl font-headline font-bold tracking-tighter text-on-surface my-8">
-        Current Filter: 
+        Current Filter:
         <span className="text-primary uppercase ml-2">
-          {data === null ? "None" : appliedStage === 'ALL' ? 'All Stages' : STAGE_LABELS[appliedStage]}
+          {data === null
+            ? 'None'
+            : appliedStage === 'ALL'
+              ? 'All Stages'
+              : STAGE_LABELS[appliedStage]}
         </span>
       </h1>
       {/* Idle - user hasn't search before */}
@@ -76,14 +80,16 @@ function Events() {
       )}
       {/* Success with results */}
       {data !== null && data.length > 0 && (
-        <div className={`space-y-4 transition-opacity duration-200 ${loading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
-          {data.map(event => (
+        <div
+          className={`space-y-4 transition-opacity duration-200 ${loading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}
+        >
+          {data.map((event) => (
             <MatchCard key={event.id} event={event} />
           ))}
         </div>
       )}
     </>
-  )
+  );
 }
 
-export default Events
+export default Events;
