@@ -105,15 +105,14 @@ function Teams() {
             {/* Modal Header */}
             <div className="flex justify-between items-center p-6 border-b border-outline-variant/10">
               <h2 className="text-xl font-headline font-bold uppercase tracking-widest text-on-surface flex items-center gap-3">
-                {selectedTeam.logoUrl ? (
+                {selectedTeam.flagUrl && (
                   <img
-                    src={selectedTeam.logoUrl}
+                    src={selectedTeam.flagUrl}
                     alt={selectedTeam.countryName}
                     className="h-8 object-contain"
                   />
-                ) : (
-                  selectedTeam.countryName
                 )}
+                {selectedTeam.countryName}
               </h2>
               <button
                 className="material-symbols-outlined text-secondary hover:text-primary transition-colors cursor-pointer"
