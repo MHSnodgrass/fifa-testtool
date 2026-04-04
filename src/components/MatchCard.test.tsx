@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { describe, it, expect } from 'vitest';
 import MatchCard from './MatchCard';
 import type { EventResponse } from '../types/api';
@@ -113,5 +114,81 @@ describe('MatchCard', () => {
     // But it should render the country codes in the fallback spans
     expect(screen.getByText('CAN')).toBeInTheDocument();
     expect(screen.getByText('MEX')).toBeInTheDocument();
+  });
+
+  it('opens and closes the inspect modal, displaying team stats', async () => {
+    // Add stats to the mock event
+    const eventWithStats = createMockEvent({
+      homeTeam: {
+        ...createMockEvent().homeTeam!,
+        stats: {
+          matchesPlayed: 3,
+          wins: 2,
+          draws: 1,
+          losses: 0,
+          goalsFor: 5,
+          goalsAgainst: 2,
+          goalDifference: 3,
+          groupPoints: 7,
+          yellowCards: 2,
+          redCards: 0,
+          eliminated: false
+        }
+      },
+      awayTeam: {
+        ...createMockEvent().awayTeam!,
+        stats: {
+          matchesPlayed: 3,
+          wins: 1,
+          draws: 0,
+          losses: 2,
+          goalsFor: 3,
+          goalsAgainst: 4,
+          goalDifference: -1,
+          groupPoints: 3,
+          yellowCards: 4,
+          redCards: 1,
+          eliminated: false
+        }
+      }
+    });
+
+    render(<MatchCard event={eventWithStats} />);
+
+    // Modal should not be in the document initially
+    expect(screen.queryByText('Match Statistics')).not.toBeInTheDocument();
+
+    // Click "Inspect"
+    await userEvent.click(screen.getByText('Inspect'));
+
+    // Modal should appear
+    expect(screen.getByText('Match Statistics')).toBeInTheDocument();
+
+    // Raw Event Data should be displayed
+    expect(screen.getByText('Raw Event Data')).toBeInTheDocument();
+    expect(screen.getByText('Event ID')).toBeInTheDocument();
+    expect(screen.getByText('Match Number')).toBeInTheDocument();
+    expect(screen.getByText('Arena Name')).toBeInTheDocument();
+
+    // Check specific raw data values
+    expect(screen.getByText('BMO Field')).toBeInTheDocument();
+    expect(screen.getByText('Toronto')).toBeInTheDocument();
+
+    // Team Statistics Comparison should be displayed
+    expect(screen.getByText('Team Statistics Comparison')).toBeInTheDocument();
+
+    // Stats should be displayed (checking a few labels and values)
+    expect(screen.getByText('Played')).toBeInTheDocument();
+
+    // Check specific stat values like '5' for Goals For (home team) and '-1' for Goal Diff (away team)
+    expect(screen.getByText('GF')).toBeInTheDocument();
+    expect(screen.getAllByText('5').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('-1').length).toBeGreaterThan(0);
+
+    // Close the modal
+    await userEvent.click(screen.getByRole('button', { name: /close modal/i }));
+
+    // Modal should be gone
+    expect(screen.queryByText('Match Statistics')).not.toBeInTheDocument();
   });
 });
